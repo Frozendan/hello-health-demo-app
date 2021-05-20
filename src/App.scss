@@ -53,3 +53,11 @@ button{
   font-size: 72px;
   text-align: center;
 }
+.nav-links{
+  list-style: none;
+  display: flex;
+  li{
+    margin-right: 10px;
+    
+  }
+}
