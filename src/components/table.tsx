@@ -10,7 +10,7 @@ interface Employee {
 }
 const Table = () => {
     //Define States
-    //The data parameters should be pass through props for better reuseable in real project
+    //NOTE: The data parameters should be pass through props for better reuseable in real project
     const initEmployeeState = {
         name: "",
         email: "",
@@ -26,6 +26,7 @@ const Table = () => {
     const [isValid, setIsValid] = useState(false)
     const [pagination, setPagination] = useState(initPagination)
     const [pageCount, setPageCount] = useState(1)
+    const [error, setError] = useState(false)
 
     //Get Data
     useEffect(() => {
@@ -41,7 +42,7 @@ const Table = () => {
 
     //Logic code 
     const renderHeader = () => {
-        let headerElement = ['id', 'name', 'email', 'position']
+        let headerElement = ['name', 'email', 'position']
 
         return headerElement.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
@@ -55,7 +56,6 @@ const Table = () => {
             return renderData && renderData.map(({ id, name, email, position }) => {
                 return (
                     <tr key={id}>
-                        <td>{id}</td>
                         <td>{name}</td>
                         <td>{email}</td>
                         <td>{position}</td>
@@ -67,23 +67,25 @@ const Table = () => {
 
     const handleInputChange = (event:any) => {
         const { name, value } = event.target;
-        if (value) {
-            setIsValid(true);
-        }
         setInitEmployee({ ...initEmployee, [name]: value });
     };
 
     const onAdd = () => {
-        setInAddingMode(true);
+            setInAddingMode(true);
     }
 
     const onSave = async () => {
-        //For demo, I just make a simple validation, that prevent all fields are empty
-        if(isValid){
+        //For demo, I just make a simple validation, that prevent all fields are empty and wrong email format
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const {name, email, position} = initEmployee;
+        if ((name && email && position) && re.test(email)){
             await axios.post(url, initEmployee);
             getData();
-        };
-        setInAddingMode(false);
+            setInAddingMode(false);
+            setError(false)
+        } else {
+            setError(true)
+        }
     }
 
     //PAGINATION
@@ -122,10 +124,10 @@ const Table = () => {
                                 {  
                                     inAddingMode && 
                                         <React.Fragment>
-                                        <td>add</td>
-                                        <td><input className='form-control' name='name' onChange={handleInputChange}/></td>
-                                        <td><input className='form-control' name='email' onChange={handleInputChange}/></td>
-                                        <td><input className='form-control' name='position' onChange={handleInputChange}/></td>
+                                        <td><input className='form-control' type='text' name='name' onChange={handleInputChange}/></td>
+                                        <td><input className='form-control' type='email' name='email' onChange={handleInputChange}/></td>
+                                        <td><input className='form-control' type='text' name='position' onChange={handleInputChange}/></td>
+                                       
                                         </React.Fragment>
                                 }
                             </tr>
