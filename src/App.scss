@@ -1,0 +1,41 @@
+
+button{
+  height: 40px;
+  padding: 10px;
+  font-size: 1rem;
+}
+.container{
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+.table{
+ border-collapse: collapse;
+ border: 3px solid #ddd;
+ width: 100%;
+ margin: 0 auto;
+ td, th {
+  border: 1px solid #ddd;
+  padding: 12px;
+ }
+}
+.pagination{
+  margin-top: 20px;
+  float: right;
+  display: flex;
+  .control{
+      width: 40px;
+      margin-right: 5px;
+      &:last-child{
+        margin: 0;
+      }
+      &.selected{
+        background: blue;
+        color: white;
+      }
+  }
+}
+.form-control{
+  height: 40px;
+  padding: 0 10px;
+}
