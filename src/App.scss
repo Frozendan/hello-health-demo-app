@@ -39,3 +39,17 @@ button{
   height: 40px;
   padding: 0 10px;
 }
+.text-center{
+  text-align: center;
+}
+.counter-control{
+  display: flex;
+  justify-content: center;
+  button{
+    margin: 0 10px;
+  }
+}
+.counter-label{
+  font-size: 72px;
+  text-align: center;
+}

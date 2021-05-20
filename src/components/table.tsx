@@ -80,7 +80,7 @@ const Table = () => {
     const onSave = async () => {
         //For demo, I just make a simple validation, that prevent all fields are empty
         if(isValid){
-            const response = await axios.post(url, initEmployee);
+            await axios.post(url, initEmployee);
             getData();
         };
         setInAddingMode(false);
@@ -92,6 +92,7 @@ const Table = () => {
             const activeClassName = i === pagination.currentPage ? 'selected' : '';
             controls.push(
                 <button
+                key={i}
                 className={`control ${activeClassName}`}
                 onClick={() => setPagination({ ...pagination, currentPage: i })}
                 >
