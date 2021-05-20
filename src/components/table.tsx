@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 
 const url = 'https://60a5e4e5c0c1fd00175f49c4.mockapi.io/employees';
@@ -10,6 +10,7 @@ interface Employee {
 }
 const Table = () => {
     //Define States
+    //The data parameters should be pass through props for better reuseable in real project
     const initEmployeeState = {
         name: "",
         email: "",
@@ -19,15 +20,15 @@ const Table = () => {
         currentPage: 1,
         pageSize: 5,
     };
-    const [employees, setEmployees] = React.useState<Employee[]>([])
+    const [employees, setEmployees] = useState<Employee[]>([])
     const [inAddingMode, setInAddingMode] = useState(false);
-    const [initEmployee, setInitEmployee] = React.useState(initEmployeeState)
-    const [isValid, setIsValid] = React.useState(false)
-    const [pagination, setPagination] = React.useState(initPagination)
-    const [pageCount, setPageCount] = React.useState(1)
+    const [initEmployee, setInitEmployee] = useState(initEmployeeState)
+    const [isValid, setIsValid] = useState(false)
+    const [pagination, setPagination] = useState(initPagination)
+    const [pageCount, setPageCount] = useState(1)
 
     //Get Data
-    React.useEffect(() => {
+    useEffect(() => {
         getData()
     }, [])
 
@@ -37,7 +38,6 @@ const Table = () => {
         setEmployees(response.data)
         setPageCount(pageCount)
     }
-
 
     //Logic code 
     const renderHeader = () => {
@@ -85,6 +85,10 @@ const Table = () => {
         };
         setInAddingMode(false);
     }
+
+    //PAGINATION
+    //For better customization, we can separate pagination to another component and allow customize through props of table,
+    //but in demo project I let it stay within table component
 
     const createPagination = () => {
         let controls = [];

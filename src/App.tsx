@@ -3,36 +3,39 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  NavLink
 } from 'react-router-dom';
 import './App.scss';
 
-import Table from './components/table'
-import Counter from './components/counter'
+import CounterPage from './pages/counter-page'
+import TablePage from './pages/table-page'
 
 
 function App() {
   return (
     <div className="App">
        <Router>
+        
         <nav>
-            <ul className='nav-links'>
-              <li>
-                <Link to="/">Table</Link>
-              </li>
-              <li>
-                <Link to="/counter">Counter</Link>
-              </li>
-            </ul>
-          </nav>
+          <div className='container'>
+              <ul className='nav-links'>
+                <li>
+                  <NavLink exact  activeClassName='is-active' to="/">Table</NavLink>
+                </li>
+                <li>
+                  <NavLink exact  activeClassName='is-active' to="/counter">Counter</NavLink>
+                </li>
+              </ul>
+          </div>
+        </nav>
 
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
-            <Switch>
-              <Route exact path="/" component={Table} />
-              <Route exact path="/counter" component={Counter} />
-            </Switch>
-         </Router>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route exact path="/" component={TablePage} />
+          <Route exact path="/counter" component={CounterPage} />
+        </Switch>
+      </Router>
     </div>
   );
 }
